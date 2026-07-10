@@ -1,0 +1,27 @@
+[project]
+name = "python-sandbox"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ty>=0.0.50",
+    "ruff>=0.9.0", # Added Ruff to your toolchain
+]
+
+[tool.ty.environment]
+python-version = "3.14"
+python-platform = "linux"
+
+# Tell Ruff to target modern Python style standards
+[tool.ruff]
+target-version = "py314"
+line-length = 88
+
+[tool.ruff.lint]
+# Enable Pyflakes (F) and Pycodestyle (E/W) rules by default
+select = ["E", "F", "W", "I"]
+ignore = []

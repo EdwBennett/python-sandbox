@@ -1,0 +1,39 @@
+awk '
+BEGIN {
+  para = 0
+  in_para = 0
+  sentence = ""
+  done = 0
+}
+NF == 0 {
+  if (in_para) {
+    para++
+    in_para = 0
+  }
+  next
+}
+{
+  if (done) next
+  in_para = 1
+
+  if (para == 1) {
+    # Append this physical line
+    sentence = sentence $0 " "
+
+    idx = index(sentence, ".")
+    if (idx > 0) {
+      # Take text up to the first period
+      out = substr(sentence, 1, idx)
+
+      # Remove leading spaces
+      sub(/^[[:space:]]+/, "", out)
+
+      # Collapse multiple spaces to a single space
+      gsub(/[[:space:]]+/, " ", out)
+
+      print out
+      done = 1
+    }
+  }
+}
+' chapter_one.txt
